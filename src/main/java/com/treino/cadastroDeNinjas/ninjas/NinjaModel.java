@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class NinjaModel {
 
     @Id
@@ -22,13 +23,19 @@ public class NinjaModel {
 
     private String cla;
 
-    private String rank;
+    @Column(name = "rank_ninja")
+    private String rankUP;
 
     @ManyToOne
     @JoinColumn(name = "missoes_id")
     private MissoesModel missoes;
 
-    private List<MissoesModel> missoesConcluidas;
+    @ManyToMany
+    @JoinTable(
+            name = "ninja_tecnica",
+            joinColumns = @JoinColumn(name = "ninja_id"),
+            inverseJoinColumns = @JoinColumn(name = "tecnica_id")
+    )
     private List<TecnicasModel> tecnicas;
 
 }
